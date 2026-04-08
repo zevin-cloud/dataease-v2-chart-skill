@@ -1,0 +1,29 @@
+{
+  "_comment": "chart_bar 模板参数（基于 test.json 结构）",
+  "view": {
+    "VIEW_ID": "{{ VIEW_ID }}",
+    "CONTENT_ID": "{{ CONTENT_ID }}",
+    "SCENE_ID": "{{ SCENE_ID }}"
+  },
+  "dataset": {
+    "DATASOURCE_ID": "{{ DATASOURCE_ID }}",
+    "DATASET_TABLE_ID": "{{ DATASET_TABLE_ID }}",
+    "DATASET_GROUP_ID": "{{ DATASET_GROUP_ID }}"
+  },
+  "fields": {
+    "xAxis": {
+      "XAXIS_FIELD_ID": "{{ XAXIS_FIELD_ID }}",
+      "XAXIS_DE_NAME": "{{ XAXIS_DE_NAME }}"
+    },
+    "yAxis": {
+      "YAXIS_FIELD_ID": "{{ YAXIS_FIELD_ID }}",
+      "YAXIS_DE_NAME": "{{ YAXIS_DE_NAME }}",
+      "YAXIS_SERIES_ID": "{{ YAXIS_SERIES_ID }}"
+    },
+    "yAxis2": {
+      "YAXIS2_FIELD_ID": "{{ YAXIS2_FIELD_ID }}",
+      "YAXIS2_DE_NAME": "{{ YAXIS2_DE_NAME }}",
+      "YAXIS2_SERIES_ID": "{{ YAXIS2_SERIES_ID }}"
+    }
+  }
+}
