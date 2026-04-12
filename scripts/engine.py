@@ -104,7 +104,7 @@ class DataEaseChartEngine:
 
         return ctx
 
-    def deploy(self, chart_type, title, dataset_id, x_names, y_names):
+    def deploy(self, chart_type, title, dataset_id, x_names, y_names, layout=None):
         # 1. Directory standardization
         # Use relative path from this script (scripts/engine.py) to templates/
         base_dir = os.path.dirname(os.path.abspath(__file__))
@@ -148,6 +148,96 @@ class DataEaseChartEngine:
 
         # 5. Type Closure & Payload Finalization
         board_name = f"{title}_{int(time.time())}"
+
+        # Override title in canvasViewInfo
+        if "canvasViewInfo" in payload and view_id in payload["canvasViewInfo"]:
+            view_info = payload["canvasViewInfo"][view_id]
+            view_info["title"] = title
+
+            # Deep update all field names (xAxis, yAxis, labels, tooltips, etc.)
+            def deep_update_field_names(obj, target_id, new_name):
+                if isinstance(obj, dict):
+                    if str(obj.get("id")) == str(target_id):
+                        obj["name"] = new_name
+                        if "description" in obj: obj["description"] = new_name
+                        if "originName" in obj: obj["originName"] = new_name
+                        # 核心修复：DataEase V2 在某些场景下会回退到 dbFieldName，强制设为 null 或同步
+                        if "dbFieldName" in obj: obj["dbFieldName"] = None
+
+                        # 特殊修复：处理 DataEase 特有的标签和提示框拼接字段 (如 "访问平台(求和)")
+                        # 我们无法预知原始模板里的名字，所以这里尝试匹配常见的拼接模式
+                        if "optionLabel" in obj:
+                            obj["optionLabel"] = new_name + (obj["optionLabel"].partition("(")[1] + obj["optionLabel"].partition("(")[2] if "(" in obj["optionLabel"] else "")
+                        if "optionShowName" in obj:
+                            obj["optionShowName"] = new_name + (obj["optionShowName"].partition("(")[1] + obj["optionShowName"].partition("(")[2] if "(" in obj["optionShowName"] else "")
+
+                    for v in obj.values():
+                        deep_update_field_names(v, target_id, new_name)
+                elif isinstance(obj, list):
+                    for item in obj:
+                        deep_update_field_names(item, target_id, new_name)
+
+            # Apply updates for X and Y axis fields
+            # We use the field IDs obtained from dataset metadata to find and replace
+            dataset_ctx = self.get_dataset_ctx(dataset_id, x_names, y_names)
+
+            # Pre-scan templates/params.json for the old names to ensure replacement works
+            # or use common default names from templates
+            old_names_to_clear = ["访问次数", "访问平台", "浏览量"]
+
+            for i, x_name in enumerate(x_names):
+                f_id = dataset_ctx.get(f"XAXIS{'' if i==0 else i+1}_FIELD_ID")
+                if f_id:
+                    deep_update_field_names(view_info, f_id, x_name)
+
+            for i, y_name in enumerate(y_names):
+                f_id = dataset_ctx.get(f"YAXIS{'' if i==0 else i+1}_FIELD_ID")
+                if f_id:
+                    deep_update_field_names(view_info, f_id, y_name)
+
+            # 最终保底：如果还有残留的“访问次数”或“访问平台”，强行全局替换
+            def brute_force_replace(obj, search_list, replace_list):
+                if isinstance(obj, dict):
+                    for k, v in obj.items():
+                        if isinstance(v, str):
+                            for s, r in zip(search_list, replace_list):
+                                if s in v:
+                                    obj[k] = v.replace(s, r)
+                        else:
+                            brute_force_replace(v, search_list, replace_list)
+                elif isinstance(obj, list):
+                    for item in obj:
+                        brute_force_replace(item, search_list, replace_list)
+
+            # Use primary X/Y names for brute force fallback
+            if x_names and y_names:
+                brute_force_replace(view_info, ["访问平台", "访问次数", "浏览量"], [x_names[0], y_names[0], y_names[0]])
+
+        # If layout is provided, override it in componentData
+        if "componentData" in payload:
+            components = json.loads(payload["componentData"])
+            if components:
+                target = components[0]
+                # Update component name to title
+                target["name"] = title
+                target["label"] = title
+                if layout:
+                    if "x" in layout: target["x"] = layout["x"]
+                    if "y" in layout: target["y"] = layout["y"]
+                    if "sizeX" in layout: target["sizeX"] = layout["sizeX"]
+                    if "sizeY" in layout: target["sizeY"] = layout["sizeY"]
+                    if "style" not in target: target["style"] = {}
+                    if "width" in layout: target["style"]["width"] = layout["width"]
+                    if "height" in layout: target["style"]["height"] = layout["height"]
+                    if "left" in layout: target["style"]["left"] = layout["left"]
+                    if "top" in layout: target["style"]["top"] = layout["top"]
+                payload["componentData"] = json.dumps(components, separators=(',', ':'), ensure_ascii=False)
+
+        # Ensure canvasStyleData is also compact
+        if "canvasStyleData" in payload:
+            style = json.loads(payload["canvasStyleData"])
+            payload["canvasStyleData"] = json.dumps(style, separators=(',', ':'), ensure_ascii=False)
+
         payload.update({
             "id": None,
             "name": board_name,

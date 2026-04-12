@@ -1,0 +1,166 @@
+{
+  "animations": [],
+  "canvasId": "canvas-main",
+  "events": {
+    "checked": false,
+    "showTips": false,
+    "type": "jump",
+    "typeList": [
+      {
+        "key": "jump",
+        "label": "jump"
+      },
+      {
+        "key": "download",
+        "label": "download"
+      },
+      {
+        "key": "share",
+        "label": "share"
+      },
+      {
+        "key": "fullScreen",
+        "label": "fullScreen"
+      },
+      {
+        "key": "showHidden",
+        "label": "showHidden"
+      },
+      {
+        "key": "refreshDataV",
+        "label": "refreshDataV"
+      },
+      {
+        "key": "refreshView",
+        "label": "refreshView"
+      }
+    ],
+    "jump": {
+      "value": "https://",
+      "type": "_blank"
+    },
+    "download": {
+      "value": true
+    },
+    "share": {
+      "value": true
+    },
+    "showHidden": {
+      "value": true
+    },
+    "refreshDataV": {
+      "value": true
+    },
+    "refreshView": {
+      "value": true,
+      "target": "all"
+    }
+  },
+  "carousel": {
+    "enable": false,
+    "time": 10
+  },
+  "multiDimensional": {
+    "enable": false,
+    "x": 0,
+    "y": 0,
+    "z": 0
+  },
+  "groupStyle": {},
+  "isLock": false,
+  "maintainRadio": false,
+  "aspectRatio": 1,
+  "isShow": true,
+  "dashboardHidden": false,
+  "category": "base",
+  "dragging": false,
+  "resizing": false,
+  "collapseName": [
+    "position",
+    "background",
+    "style",
+    "picture",
+    "frameLinks",
+    "videoLinks",
+    "streamLinks",
+    "carouselInfo",
+    "events",
+    "decoration_style"
+  ],
+  "linkage": {
+    "duration": 0,
+    "data": [
+      {
+        "id": "",
+        "label": "",
+        "event": "",
+        "style": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ]
+      }
+    ]
+  },
+  "component": "UserView",
+  "name": "\u57fa\u7840\u67f1\u72b6\u56fe",
+  "label": "\u57fa\u7840\u67f1\u72b6\u56fe",
+  "propValue": {
+    "textValue": "",
+    "urlList": []
+  },
+  "icon": "bar",
+  "innerType": "bar",
+  "editing": false,
+  "canvasActive": false,
+  "actionSelection": {
+    "linkageActive": "custom"
+  },
+  "x": 1,
+  "y": 1,
+  "sizeX": 36,
+  "sizeY": 14,
+  "style": {
+    "rotate": 0,
+    "opacity": 1,
+    "borderActive": false,
+    "borderWidth": 1,
+    "borderRadius": 5,
+    "borderStyle": "solid",
+    "borderColor": "rgba(204, 204, 204, 1)",
+    "adaptation": "adaptation",
+    "width": 519,
+    "height": 65.33333333333334,
+    "left": 0,
+    "top": 0
+  },
+  "matrixStyle": {},
+  "commonBackground": {
+    "backgroundColorSelect": true,
+    "backdropFilterEnable": false,
+    "backgroundImageEnable": false,
+    "backgroundType": "innerImage",
+    "innerImage": "board/board_1.svg",
+    "outerImage": null,
+    "innerPadding": {
+      "mode": "uniform",
+      "top": 12
+    },
+    "borderRadius": {
+      "mode": "uniform",
+      "topLeft": 0
+    },
+    "backdropFilter": 4,
+    "backgroundColor": "rgba(255,255,255,1)",
+    "innerImageColor": "rgba(16, 148, 229,1)"
+  },
+  "state": "ready",
+  "render": "antv",
+  "isPlugin": false,
+  "id": "{{ VIEW_ID }}",
+  "_dragId": 0,
+  "linkageFilters": [],
+  "expand": false,
+  "resizeInnerKeep": false
+}

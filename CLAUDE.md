@@ -7,12 +7,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ### Deployment
 
 - **Deploy a chart**: `python3 scripts/deploy.py <type> <title> <dataset_name_or_id> <x_axis_fields> <y_axis_fields>`
-  - `type`: `line` or `pie` (`bar` is currently under maintenance).
+  - `type`: `line`, `pie`, `bar`, or `table_info`.
   - `title`: Desired chart title.
   - `dataset_name_or_id`: Name of the dataset in DataEase or its 19-digit ID.
-  - `x_axis_fields`: Dimension field name.
-  - `y_axis_fields`: Measure field name(s), comma-separated.
-- **Example**: `python3 scripts/deploy.py line 'Sales Trend' 'ecommerce_data' 'platform' 'orders,revenue'`
+  - `x_axis_fields`: Dimension field name(s).
+  - `y_axis_fields`: Measure field name(s).
+- **Deploy a multi-chart dashboard**: `python3 scripts/multi_deploy.py <dashboard_title> '<charts_json_config>'`
+  - `charts_json_config`: A JSON array of chart configurations.
+  - **Example**: `python3 scripts/multi_deploy.py '综合看板' '[{"type":"bar","dataset_name":"sales","x_axis":["region"],"y_axis":["amount"]},{"type":"line","dataset_name":"sales","x_axis":["date"],"y_axis":["amount"]}]'`
+  - **Note**: The engine supports auto-layout if `layout` is omitted in the config.
 
 ### Environment Setup
 

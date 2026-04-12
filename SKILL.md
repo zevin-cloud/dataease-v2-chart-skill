@@ -35,8 +35,16 @@ cp .env.example .env
 # 然后编辑 .env 填写实际内容
 ```
 
+## 使用方法
+
+### 部署单图表
 ```bash
 python3 scripts/deploy.py <type> <title> <dataset> <x_fields> <y_fields>
+```
+
+### 部署多图表看板
+```bash
+python3 scripts/multi_deploy.py <dashboard_title> '<charts_json_config>'
 ```
 
 ### 参数说明
@@ -46,6 +54,9 @@ python3 scripts/deploy.py <type> <title> <dataset> <x_fields> <y_fields>
 - `dataset`: 数据集名称（如：年终述职）或 ID。
 - `x_fields`: 维度字段名。如果是明细表，可传入逗号分隔的多个字段。
 - `y_fields`: 指标字段名，多个指标请用逗号分隔。明细表传空字符串 `''`。
+- `charts_json_config`: 多图表配置的 JSON 数组字符串。
+    - **结构**: `[{"type": "...", "dataset_name": "...", "x_axis": ["..."], "y_axis": ["..."], "layout": {...}}]`
+    - **自动布局**: 如果省略 `layout` 参数，引擎将自动按两列平铺排列。
 
 ### 示例
 
@@ -53,8 +64,8 @@ python3 scripts/deploy.py <type> <title> <dataset> <x_fields> <y_fields>
 # 生成折线图
 python3 scripts/deploy.py line '流量趋势' '电商数据' '日期' '访问量,成交额'
 
-# 生成明细表
-python3 scripts/deploy.py table_info '用户信息表' '用户数据集' '姓名,地区,手机号' ''
+# 生成多图表看板（AI 常用模式）
+python3 scripts/multi_deploy.py '综合看板' '[{"type":"bar","dataset_name":"电商数据","x_axis":["平台"],"y_axis":["访问量"]},{"type":"line","dataset_name":"电商数据","x_axis":["日期"],"y_axis":["成交额"]}]'
 ```
 
 ## 开发者说明
