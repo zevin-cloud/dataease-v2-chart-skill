@@ -16,6 +16,31 @@ security:
 
 该 Skill 赋能 AI Agent 直接通过 API 在 DataEase v2 中创建、配置并部署可视化仪表板。它能够自动处理数据集关联、字段映射及布局计算。
 
+## 🚀 快速开始与环境配置
+
+首次使用或环境未就绪时，**必须引导用户配置凭据**：
+
+1. **检查 .env**: 确认项目根目录是否存在 `.env` 文件。
+2. **引导配置**: 若缺少凭据，请告知用户执行以下操作：
+   - 将 `.env.example` 拷贝为 `.env`。
+   - 填写 `DATAEASE_ACCESS_KEY`, `DATAEASE_SECRET_KEY`, `DATAEASE_BASE_URL`。
+3. **验证凭据**: 配置完成后，运行 `python3 scripts/inspect_data.py --list-datasets` 验证连通性。
+
+## 🔎 数据探索指南 (重要)
+
+当你不确定数据集名称或字段名时，**必须先执行数据查询指令**，不要盲目猜测：
+
+### 1. 查询所有可用数据集
+```bash
+python3 scripts/inspect_data.py --list-datasets
+```
+
+### 2. 查询特定数据集的字段
+```bash
+python3 scripts/inspect_data.py --dataset "<数据集名称或ID>"
+```
+- **关键**: 拿到字段名和类型后，再根据业务逻辑匹配 `x_axis` 和 `y_axis`。
+
 ## 💡 核心指令指南
 
 当用户提出可视化需求时，请优先判断是“单图表”还是“多图表看板”：

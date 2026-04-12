@@ -16,6 +16,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
   - `charts_json_config`: A JSON array of chart configurations.
   - **Example**: `python3 scripts/multi_deploy.py '综合看板' '[{"type":"bar","title":"门店销售","dataset_name":"sales","x_axis":["region"],"y_axis":["amount"]},{"type":"line","title":"趋势分析","dataset_name":"sales","x_axis":["date"],"y_axis":["amount"]}]'`
   - **Note**: The engine supports auto-layout if `layout` is omitted in the config.
+- **Inspect data**: `python3 scripts/inspect_data.py [--list-datasets] [--dataset <name_or_id>]`
+
+### Setup Check (Onboarding)
+Before performing any tasks, verify that `.env` exists and contains the required variables. If not, prompt the user to configure them.
 
 ### Environment Setup
 
