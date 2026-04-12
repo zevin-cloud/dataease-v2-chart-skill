@@ -37,8 +37,8 @@ def main():
     chart_type = sys.argv[1]
     title = sys.argv[2]
     dataset_id = sys.argv[3]
-    x_axis = sys.argv[4].split(',')
-    y_axis = sys.argv[5].split(',')
+    x_axis = [f.strip() for f in sys.argv[4].split(',') if f.strip()]
+    y_axis = [f.strip() for f in sys.argv[5].split(',') if f.strip()]
 
 
     engine = DataEaseChartEngine(BASE_URL, ACCESS_KEY, SECRET_KEY)

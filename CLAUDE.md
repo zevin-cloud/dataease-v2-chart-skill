@@ -5,6 +5,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ### Deployment
+
 - **Deploy a chart**: `python3 scripts/deploy.py <type> <title> <dataset_name_or_id> <x_axis_fields> <y_axis_fields>`
   - `type`: `line` or `pie` (`bar` is currently under maintenance).
   - `title`: Desired chart title.
@@ -14,15 +15,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - **Example**: `python3 scripts/deploy.py line 'Sales Trend' 'ecommerce_data' 'platform' 'orders,revenue'`
 
 ### Environment Setup
+
 - Required environment variables: `DATAEASE_ACCESS_KEY`, `DATAEASE_SECRET_KEY`, `DATAEASE_BASE_URL`.
 - These can be set in a `.env` file in the root directory.
 
 ## Code Architecture
 
 ### Overview
+
 This repository implements a DataEase V2 Chart Skill. It uses a template-based approach to generate DataEase dashboard JSON payloads and deploy them via the DataEase API.
 
 ### Core Components
+
 - **`scripts/engine.py`**: The core logic (`DataEaseChartEngine`).
   - `resolve_dataset_id()`: Resolves dataset names to internal DataEase IDs.
   - `get_dataset_ctx()`: Fetches dataset metadata (field IDs, table IDs) to populate templates.
@@ -31,9 +35,10 @@ This repository implements a DataEase V2 Chart Skill. It uses a template-based a
 - **`templates/`**: Contains chart-specific templates.
   - `template.j2`: JSON structure of the DataEase dashboard with `{{ PLACEHOLDERS }}`.
   - `params.json`: Default configuration and parameter mapping for the template.
-- **SDK Dependency**: Relies on a DataEase SDK located at `/root/code/dataease-tools/dataease_sdk_v2`.
+- **SDK Dependency**: Relies on a DataEase SDK. Configure its path via `DATAEASE_SDK_PATH` in `.env`.
 
 ### Important Notes
+
 - **Chart Support**: `line` and `pie` are supported. `bar` is currently hidden/under maintenance in `scripts/deploy.py` and `scripts/engine.py`.
 - **ID Generation**: `VIEW_ID` and `CONTENT_ID` are randomized at runtime using `time.time()`.
 - **Placeholder Substitution**: Uses a custom regex-based substitution in `engine.py` (not a full Jinja2 engine, despite the `.j2` extension).

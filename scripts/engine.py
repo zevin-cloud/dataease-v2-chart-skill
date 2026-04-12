@@ -2,13 +2,8 @@ import json, re, time, random, os, sys, requests
 import urllib3
 urllib3.disable_warnings()
 
-# Add SDK path
-sys.path.append("/root/code/dataease-tools/dataease_sdk_v2")
-try:
-    from client import DataEaseClient
-except ImportError:
-    print("Error: DataEase SDK not found at /root/code/dataease-tools/dataease_sdk_v2")
-    sys.exit(1)
+# Local SDK client
+from client import DataEaseClient
 
 class DataEaseChartEngine:
     def __init__(self, base_url, ak, sk):
@@ -192,7 +187,9 @@ class DataEaseChartEngine:
             }
         )
 
-        return dashboard_id, f"https://de2.zevin.xin:20000/de2/#/dashboard/{dashboard_id}"
+        # Generate preview URL (removing API path suffix like /de2api)
+        base_preview_url = self.base_url.split('/de2api')[0] if '/de2api' in self.base_url else self.base_url
+        return dashboard_id, f"{base_preview_url}/#/preview?dvId={dashboard_id}&dvType=dashboard&ignoreParams=true"
 
     @staticmethod
     def rand_id():

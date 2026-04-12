@@ -28,6 +28,11 @@ SECRET_KEY = os.environ.get("DATAEASE_SECRET_KEY")
 BASE_URL   = os.environ.get("DATAEASE_BASE_URL")
 
 def list_datasets():
+    # Load env for SDK path
+    sdk_path = os.environ.get("DATAEASE_SDK_PATH", "")
+    if sdk_path and sdk_path not in sys.path:
+        sys.path.append(sdk_path)
+    
     engine = DataEaseChartEngine(BASE_URL, ACCESS_KEY, SECRET_KEY)
     
     url = f"{engine.base_url}/datasetTree/tree"
