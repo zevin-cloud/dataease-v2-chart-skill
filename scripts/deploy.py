@@ -40,9 +40,6 @@ def main():
     x_axis = sys.argv[4].split(',')
     y_axis = sys.argv[5].split(',')
 
-    if chart_type == 'bar':
-        print("\n❌ Error: The 'bar' chart type is currently under maintenance and hidden. Please use 'line' or 'pie' instead.")
-        sys.exit(1)
 
     engine = DataEaseChartEngine(BASE_URL, ACCESS_KEY, SECRET_KEY)
 
