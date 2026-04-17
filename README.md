@@ -34,7 +34,7 @@ git clone https://github.com/zevin-cloud/dataease-v2-chart-skill ~/.openclaw/wor
 ```text
 DATAEASE_ACCESS_KEY=你的AccessKey
 DATAEASE_SECRET_KEY=你的SecretKey
-DATAEASE_BASE_URL=https://你的域名:20000/de2api
+DATAEASE_BASE_URL=https://你的域名:你的端口/de2api
 ```
 <img width="1910" height="873" alt="image" src="https://github.com/user-attachments/assets/b11dfa65-c0f9-4746-a8b4-0cd21e2d9f29" />
 
